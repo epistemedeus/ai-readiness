@@ -1,0 +1,12 @@
+name: "AI Readiness Check"
+description: "Check whether AI search engines (ChatGPT, Perplexity, Claude, Google AI) can crawl and understand a URL."
+branding: { icon: "search", color: "green" }
+inputs:
+  url:
+    description: "The URL to check"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: node ${{ github.action_path }}/index.js "${{ inputs.url }}"

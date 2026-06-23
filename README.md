@@ -47,6 +47,16 @@ Score 72/100  Grade B
 
 JSON output for scripting: `npx github:epistemedeus/ai-readiness yoursite.com --json`
 
+## Use in CI (GitHub Action)
+
+Fail-fast on AI-search regressions by checking a URL on every deploy:
+
+```yaml
+- uses: epistemedeus/ai-readiness@v1
+  with:
+    url: https://yoursite.com
+```
+
 ## The deep version
 
 This CLI checks the technical basics. The questions it **can't** answer from your markup: *do ChatGPT, Perplexity, and Google AI actually cite you for the queries your buyers type? How do you compare to named competitors? What's the highest-ROI fix first?*
