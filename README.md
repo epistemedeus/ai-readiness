@@ -10,6 +10,30 @@ No install, no signup, no dependencies. Node 18+.
 
 > Prefer a browser? Run the same check (no install) at **[samedaydesk.com/tools/ai-readiness](https://samedaydesk.com/tools/ai-readiness)**.
 
+## Dataset: 136 companies scored for AI-search readiness (June 2026)
+
+We ran this checker against the homepages of **136 well-known companies across 7 industries** and published the full results. Open data, free to use with attribution.
+
+- **Full CSV:** [`data/ai-search-readiness-2026.csv`](data/ai-search-readiness-2026.csv)
+- **Interactive, sortable leaderboard:** [samedaydesk.com — AI-Search Readiness Leaderboard](https://samedaydesk.com/reports/ai-search-readiness-leaderboard-2026.html)
+
+**Average score by industry (lower = harder for AI search to read):**
+
+| Industry | Avg score | n |
+|---|---|---|
+| Marketing agencies | 92 | 24 |
+| SaaS | 88 | 24 |
+| Dev tools | 86 | 17 |
+| E-commerce | 85 | 19 |
+| AI startups | 83 | 25 |
+| Fintech | 74 | 16 |
+| Healthtech | 63 | 11 |
+
+**Notable findings:** Healthtech is the least AI-search-ready industry (avg 63). Klarna scored an F (38); GitHub, Chime, Ramp, Gusto, Ro, Hims and Zocdoc each scored a D. Even some AI companies struggle — Perplexity scored a C and LlamaIndex a D. Most gaps are the same and entirely fixable: JavaScript-only homepages, missing JSON-LD structured data, and no sitemap.
+
+Per-industry write-ups: [SaaS](https://samedaydesk.com/reports/ai-search-readiness-saas-2026.html) · [e-commerce](https://samedaydesk.com/reports/ai-search-readiness-ecommerce-2026.html) · [marketing agencies](https://samedaydesk.com/reports/ai-search-readiness-marketing-agencies-2026.html) · [AI startups](https://samedaydesk.com/reports/ai-search-readiness-ai-startups-2026.html) · [healthtech](https://samedaydesk.com/reports/ai-search-readiness-healthtech-2026.html).
+
+
 ## Why this matters
 
 AI search is becoming how people find things, and AI answers are pulled from a small set of pages that are **crawlable and well-structured**. If GPTBot is blocked in your `robots.txt`, or your pages have no structured data, you can be invisible in AI answers no matter how good your site looks to humans. This tool checks the technical fundamentals that decide whether you're even eligible to be cited.
