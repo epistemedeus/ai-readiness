@@ -1,6 +1,6 @@
 {
   "name": "ai-readiness",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Check if your website is visible to AI search (ChatGPT, Perplexity, Claude, Google AI). Dependency-free CLI + MCP server + free hosted tool.",
   "type": "module",
   "bin": {
@@ -34,5 +34,8 @@
     "type": "git",
     "url": "git+https://github.com/epistemedeus/ai-readiness.git"
   },
-  "author": "SameDayDesk (Neomorphic LLC)"
+  "author": "SameDayDesk (Neomorphic LLC)",
+  "scripts": {
+    "start": "node http.js"
+  }
 }

@@ -31,7 +31,7 @@ jobs:
           # Pin manifest version to the release version, then zip the bundle
           # (manifest.json must be at the archive root; we are dependency-free).
           jq --arg v "${{ steps.v.outputs.version }}" '.version=$v' manifest.json > m.tmp && mv m.tmp manifest.json
-          zip -j ai-readiness.mcpb manifest.json mcp.js lib.js package.json
+          zip -j ai-readiness.mcpb manifest.json mcp.js protocol.js lib.js package.json
           SHA="$(sha256sum ai-readiness.mcpb | cut -d' ' -f1)"
           echo "sha256=$SHA" >> "$GITHUB_OUTPUT"
           echo "Built ai-readiness.mcpb sha256=$SHA"
