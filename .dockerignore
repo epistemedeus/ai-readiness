@@ -1,0 +1,11 @@
+.git
+.github
+docs
+data
+*.mcpb
+manifest.json
+README.md
+LICENSE
+action.yml
+http.js
+index.js
