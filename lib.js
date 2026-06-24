@@ -118,3 +118,47 @@ export async function run(rawUrl, asJson) {
   const grade = score >= 90 ? "A" : score >= 75 ? "B" : score >= 60 ? "C" : score >= 40 ? "D" : "F";
   return { url: page.finalUrl || u.toString(), score, grade, checks };
 }
+
+// Generate starter AI-readiness fixes for a site: Organization + FAQPage JSON-LD
+// (pre-filled from the site's real title/description) and an AI-crawler-friendly
+// robots.txt. The free, starter version of the same-day Fix Pack.
+export async function generateFix(rawUrl) {
+  const u = normalizeUrl(rawUrl);
+  await assertPublic(u.hostname);
+  const page = await fetchText(u.toString(), true);
+  const origin = new URL(page.finalUrl || u.toString()).origin;
+  const host = new URL(origin).hostname.replace(/^www\./, "");
+  const h = analyzeHtml(page.body);
+
+  const name = (h.title ? h.title.split(/[|\-–—:]/)[0].trim() : host).slice(0, 60) || host;
+  const desc = (h.description && h.description.length >= 40 ? h.description : `${name} — see ${host} for details.`).slice(0, 300);
+
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name,
+    url: origin,
+    description: desc,
+    logo: `${origin}/logo.png`,
+  };
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      { "@type": "Question", name: `What does ${name} do?`, acceptedAnswer: { "@type": "Answer", text: desc } },
+      { "@type": "Question", name: `Where is ${name} located / what area does it serve?`, acceptedAnswer: { "@type": "Answer", text: "REPLACE with your address or service area." } },
+      { "@type": "Question", name: `How do I contact ${name}?`, acceptedAnswer: { "@type": "Answer", text: "REPLACE with phone, email, or contact page." } },
+    ],
+  };
+  const robotsTxt = [
+    "# AI search engines + crawlers welcome",
+    "User-agent: *",
+    "Allow: /",
+    "",
+    ...AI_CRAWLERS.flatMap((c) => [`User-agent: ${c.ua}`, "Allow: /", ""]),
+    `Sitemap: ${origin}/sitemap.xml`,
+    "",
+  ].join("\n");
+
+  return { url: page.finalUrl || u.toString(), host, name, organizationJsonLd, faqJsonLd, robotsTxt };
+}

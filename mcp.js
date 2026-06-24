@@ -8,10 +8,10 @@
 // stdout carries protocol messages exclusively.
 //
 // Run:  npx -y github:epistemedeus/ai-readiness ai-readiness-mcp
-import { run } from "./lib.js";
+import { run, generateFix } from "./lib.js";
 
 const PROTOCOL_VERSION = "2024-11-05";
-const SERVER_INFO = { name: "ai-readiness", version: "1.1.0" };
+const SERVER_INFO = { name: "ai-readiness", version: "1.1.2" };
 
 const TOOLS = [
   {
@@ -24,6 +24,21 @@ const TOOLS = [
       type: "object",
       properties: {
         url: { type: "string", description: "The website to check, e.g. example.com or https://example.com" },
+      },
+      required: ["url"],
+    },
+  },
+  {
+    name: "generate_ai_readiness_fixes",
+    description:
+      "Generate starter fixes to make a website visible to AI search: Organization + FAQPage JSON-LD " +
+      "(pre-filled from the site's real title/description) and an AI-crawler-friendly robots.txt. " +
+      "Paste the JSON-LD into the homepage <head> and replace robots.txt. This is the free starter version " +
+      "of the same-day Fix Pack.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        url: { type: "string", description: "The website to generate fixes for, e.g. example.com" },
       },
       required: ["url"],
     },
@@ -66,27 +81,47 @@ function formatReport(r) {
   return lines.join("\n");
 }
 
+function formatFixes(r) {
+  return [
+    `Starter AI-readiness fixes for ${r.host}`,
+    "",
+    "1) Paste this into your homepage <head>:",
+    "<script type=\"application/ld+json\">",
+    JSON.stringify(r.organizationJsonLd, null, 2),
+    "</script>",
+    "<script type=\"application/ld+json\">",
+    JSON.stringify(r.faqJsonLd, null, 2),
+    "</script>",
+    "",
+    "2) Replace your /robots.txt with this (lets ChatGPT/Perplexity/Claude/Google-AI crawl you):",
+    r.robotsTxt,
+    "Replace any REPLACE placeholders with your real details. Then publish a /sitemap.xml and submit it in Bing Webmaster Tools.",
+    "",
+    "This is the free starter pack. The complete, same-day Fix Pack ($39) fills in every value for your exact site, " +
+      "adds Product/LocalBusiness schema where relevant, a generated sitemap, and clean title/meta/Open Graph tags: https://samedaydesk.com/",
+  ].join("\n");
+}
+
 async function handleToolCall(id, params) {
   const name = params?.name;
   const args = params?.arguments || {};
-  if (name !== "check_ai_readiness") {
+  const url = String(args.url || "").trim();
+  if (name !== "check_ai_readiness" && name !== "generate_ai_readiness_fixes") {
     return error(id, -32602, `Unknown tool: ${name}`);
   }
-  const url = String(args.url || "").trim();
   if (!url) {
     return result(id, { content: [{ type: "text", text: "Provide a url, e.g. example.com" }], isError: true });
   }
   try {
+    if (name === "generate_ai_readiness_fixes") {
+      const r = await generateFix(url);
+      return result(id, { content: [{ type: "text", text: formatFixes(r) }], structuredContent: r });
+    }
     const r = await run(url);
-    const text = formatReport(r);
-    // Return both human-readable text and the structured data.
-    return result(id, {
-      content: [{ type: "text", text }],
-      structuredContent: r,
-    });
+    return result(id, { content: [{ type: "text", text: formatReport(r) }], structuredContent: r });
   } catch (e) {
     return result(id, {
-      content: [{ type: "text", text: `Could not check ${url}: ${e.message}` }],
+      content: [{ type: "text", text: `Could not process ${url}: ${e.message}` }],
       isError: true,
     });
   }

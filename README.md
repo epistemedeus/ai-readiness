@@ -86,7 +86,9 @@ Add the checker to any [Model Context Protocol](https://modelcontextprotocol.io)
 }
 ```
 
-It exposes one tool, `check_ai_readiness(url)`, returning the score, grade, and a specific fix for each gap.
+It exposes two tools:
+- `check_ai_readiness(url)` — returns the score, grade, and a specific fix for each gap.
+- `generate_ai_readiness_fixes(url)` — generates starter Organization + FAQPage JSON-LD (pre-filled from the site) and an AI-crawler-friendly robots.txt.
 
 ## Use in CI (GitHub Action)
 
