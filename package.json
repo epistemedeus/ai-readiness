@@ -1,16 +1,38 @@
 {
   "name": "ai-readiness",
-  "version": "1.0.0",
-  "description": "Check if your website is visible to AI search (ChatGPT, Perplexity, Claude, Google AI). Dependency-free CLI + free hosted tool.",
+  "version": "1.1.0",
+  "description": "Check if your website is visible to AI search (ChatGPT, Perplexity, Claude, Google AI). Dependency-free CLI + MCP server + free hosted tool.",
   "type": "module",
-  "bin": { "ai-readiness": "index.js" },
-  "engines": { "node": ">=18" },
+  "bin": {
+    "ai-readiness": "index.js",
+    "ai-readiness-mcp": "mcp.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "keywords": [
-    "ai-search", "geo", "generative-engine-optimization", "aeo", "answer-engine-optimization",
-    "seo", "chatgpt", "perplexity", "claude", "google-ai", "llms-txt", "robots-txt", "gptbot", "schema"
+    "ai-search",
+    "geo",
+    "generative-engine-optimization",
+    "aeo",
+    "answer-engine-optimization",
+    "seo",
+    "chatgpt",
+    "perplexity",
+    "claude",
+    "google-ai",
+    "llms-txt",
+    "robots-txt",
+    "gptbot",
+    "schema",
+    "mcp",
+    "model-context-protocol"
   ],
   "license": "MIT",
   "homepage": "https://samedaydesk.com/tools/ai-readiness",
-  "repository": { "type": "git", "url": "git+https://github.com/epistemedeus/ai-readiness.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epistemedeus/ai-readiness.git"
+  },
   "author": "SameDayDesk (Neomorphic LLC)"
 }

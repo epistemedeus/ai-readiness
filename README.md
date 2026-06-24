@@ -71,6 +71,23 @@ Score 72/100  Grade B
 
 JSON output for scripting: `npx github:epistemedeus/ai-readiness yoursite.com --json`
 
+## Use as an MCP server
+
+Add the checker to any [Model Context Protocol](https://modelcontextprotocol.io) client (Claude Desktop, Cursor, Cline, etc.) so you can ask your AI assistant *"is my site visible to AI search?"* and get a scored report inline. Dependency-free, runs over stdio.
+
+```json
+{
+  "mcpServers": {
+    "ai-readiness": {
+      "command": "npx",
+      "args": ["-y", "github:epistemedeus/ai-readiness", "mcp"]
+    }
+  }
+}
+```
+
+It exposes one tool, `check_ai_readiness(url)`, returning the score, grade, and a specific fix for each gap.
+
 ## Use in CI (GitHub Action)
 
 Fail-fast on AI-search regressions by checking a URL on every deploy:
