@@ -1,0 +1,29 @@
+{
+  "manifest_version": "0.3",
+  "name": "ai-readiness",
+  "display_name": "AI Readiness",
+  "version": "1.1.1",
+  "description": "Check whether a website is visible to AI search engines (ChatGPT, Perplexity, Claude, Google AI Overviews). Scores AI-crawler access, JSON-LD structured data, title/meta, Open Graph, sitemap, and llms.txt, with a specific fix for each gap.",
+  "author": {
+    "name": "SameDayDesk (Neomorphic LLC)",
+    "url": "https://samedaydesk.com"
+  },
+  "homepage": "https://samedaydesk.com/tools/ai-readiness",
+  "documentation": "https://github.com/epistemedeus/ai-readiness",
+  "license": "MIT",
+  "keywords": ["ai-search", "geo", "seo", "mcp", "chatgpt", "perplexity", "claude", "llms-txt"],
+  "server": {
+    "type": "node",
+    "entry_point": "mcp.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/mcp.js"]
+    }
+  },
+  "tools": [
+    {
+      "name": "check_ai_readiness",
+      "description": "Check whether a website is visible to AI search engines and return a 0-100 score, grade, and a specific fix for each gap."
+    }
+  ]
+}
