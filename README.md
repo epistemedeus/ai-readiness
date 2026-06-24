@@ -116,7 +116,7 @@ That's the **AI-Search Visibility Audit** from SameDayDesk: real citation testin
 
 ## Need a custom MCP server?
 
-Like how this one is built — dependency-free, stdio **and** remote (Streamable HTTP), published to the [MCP registry](https://registry.modelcontextprotocol.io), one clean tool? We build MCP servers for your API or product the same way.
+Like how this one is built — dependency-free, stdio **and** remote (Streamable HTTP), published to the [MCP registry](https://registry.modelcontextprotocol.io), one clean tool? We build MCP servers for your API or product the same way. (Curious how? Read the guide: [How to build a dependency-free MCP server](docs/build-a-dependency-free-mcp-server.md).)
 
 **Custom MCP Server — $349, delivered fast.** You get a working server (stdio + optional hosted remote), wired to your API, with the registry/manifest setup done. → **[get one built](https://samedaydesk.com/)** ([or buy directly](https://buy.stripe.com/14A4gA6VY7vxahh6oieZ20d)).
 
