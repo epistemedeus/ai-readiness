@@ -120,6 +120,19 @@ Like how this one is built — dependency-free, stdio **and** remote (Streamable
 
 **Custom MCP Server — $349, delivered fast.** You get a working server (stdio + optional hosted remote), wired to your API, with the registry/manifest setup done. → **[get one built](https://samedaydesk.com/)** ([or buy directly](https://buy.stripe.com/14A4gA6VY7vxahh6oieZ20d)).
 
+## Guides
+
+Free, in-depth guides on getting your site read and cited by AI search:
+
+- [How to get cited by ChatGPT, Perplexity & Google AI (2026)](https://samedaydesk.com/guides/how-to-get-cited-by-ai-search-2026.html)
+- [Why isn't my site showing up in ChatGPT?](https://samedaydesk.com/guides/why-site-not-showing-up-in-chatgpt-2026.html)
+- [ChatGPT vs Perplexity vs Google AI: which can read your site](https://samedaydesk.com/guides/chatgpt-vs-perplexity-vs-google-ai-readability-2026.html)
+- [How to add JSON-LD structured data for AI search](https://samedaydesk.com/guides/how-to-add-json-ld-structured-data-for-ai-2026.html)
+- [AI crawler list 2026: GPTBot, ClaudeBot, PerplexityBot & how to allow them](https://samedaydesk.com/guides/ai-crawler-list-2026.html)
+- [Generative Engine Optimization (GEO) checklist (2026)](https://samedaydesk.com/guides/generative-engine-optimization-checklist-2026.html)
+- [Is llms.txt worth it? We checked the data](https://samedaydesk.com/guides/does-llms-txt-work-2026.html)
+- [Is your site ready for AI shopping agents?](https://samedaydesk.com/guides/is-your-site-ready-for-ai-shopping-agents-2026.html)
+
 ## License
 
 MIT © Neomorphic LLC ([SameDayDesk](https://samedaydesk.com/))
