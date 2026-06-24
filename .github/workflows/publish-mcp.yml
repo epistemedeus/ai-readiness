@@ -55,7 +55,7 @@ jobs:
             "\$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
             "name": "io.github.epistemedeus/ai-readiness",
             "title": "AI Readiness",
-            "description": "Check whether a website is visible to AI search engines (ChatGPT, Perplexity, Claude, Google AI Overviews) and return a score + a specific fix for each gap.",
+            "description": "Check if a website is visible to AI search (ChatGPT, Perplexity, Claude) and get per-gap fixes.",
             "repository": { "url": "https://github.com/epistemedeus/ai-readiness", "source": "github" },
             "websiteUrl": "https://samedaydesk.com/tools/ai-readiness",
             "version": "${{ steps.v.outputs.version }}",
