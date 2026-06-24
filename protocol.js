@@ -56,9 +56,11 @@ function formatReport(r) {
   const gaps = r.checks.filter((c) => c.status !== "pass").length;
   if (gaps > 0) {
     lines.push(
-      `${gaps} gap(s) found. Generate starter fixes free at https://samedaydesk.com/tools/schema-generator.html, ` +
-        `or get the complete same-day Fix Pack (JSON-LD + AI-crawler robots.txt + sitemap + meta/OG, built for ` +
-        `this exact site) — $39, one-click checkout, no signup: https://buy.stripe.com/28E5kE9465np2OPh2WeZ20e`,
+      `${gaps} gap(s) found. Three ways to fix: (1) free starter fixes at ` +
+        `https://samedaydesk.com/tools/schema-generator.html; (2) the $9 instant-download DIY Kit — the ` +
+        `189-company benchmark + every ready-to-paste template + a prioritized checklist: ` +
+        `https://buy.stripe.com/7sYbJ2946179611dQKeZ20i; (3) the $39 done-for-you Fix Pack built for this ` +
+        `exact site: https://buy.stripe.com/28E5kE9465np2OPh2WeZ20e`,
     );
   } else {
     lines.push(
