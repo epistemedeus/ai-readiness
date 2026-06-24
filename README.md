@@ -10,6 +10,19 @@ No install, no signup, no dependencies. Node 18+.
 
 > Prefer a browser? Run the same check (no install) at **[samedaydesk.com/tools/ai-readiness](https://samedaydesk.com/tools/ai-readiness)**.
 
+---
+
+### 📦 Want the fixes done for you? AI Search Readiness Kit — $9
+
+The checker tells you *what* to fix. This kit gives you *everything to fix it*, ready to paste:
+
+- Copy-paste **robots.txt** (welcomes every AI crawler), **Organization + WebSite + FAQPage JSON-LD**, **title/meta/Open Graph** templates, and an **XML sitemap**
+- The **7-fix priority checklist** in order of impact
+- The **full benchmark** behind the dataset below
+- Delivered **instantly** after checkout — no signup
+
+**→ [Get the AI Search Readiness Kit ($9)](https://buy.stripe.com/9B66oI1BEdTV6116oieZ20j)**  ·  Prefer a done-for-you audit of your site? See **[samedaydesk.com](https://samedaydesk.com)**.
+
 ## Dataset: 136 companies scored for AI-search readiness (June 2026)
 
 We ran this checker against the homepages of **136 well-known companies across 7 industries** and published the full results. Open data, free to use with attribution.
