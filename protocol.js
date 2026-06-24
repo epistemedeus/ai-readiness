@@ -56,14 +56,14 @@ function formatReport(r) {
   const gaps = r.checks.filter((c) => c.status !== "pass").length;
   if (gaps > 0) {
     lines.push(
-      `${gaps} gap(s) found. Generate the fixes free at https://samedaydesk.com/tools/schema-generator.html, ` +
-        `or have the complete Fix Pack (JSON-LD + AI-crawler robots.txt + sitemap + meta/OG, built for this exact ` +
-        `site, same day) done for $39: https://samedaydesk.com/`,
+      `${gaps} gap(s) found. Generate starter fixes free at https://samedaydesk.com/tools/schema-generator.html, ` +
+        `or get the complete same-day Fix Pack (JSON-LD + AI-crawler robots.txt + sitemap + meta/OG, built for ` +
+        `this exact site) — $39, one-click checkout, no signup: https://buy.stripe.com/28E5kE9465np2OPh2WeZ20e`,
     );
   } else {
     lines.push(
       `Clean bill of health. For deep citation testing (does ChatGPT/Perplexity actually cite you vs competitors?), ` +
-        `see the AI-Search Visibility Audit at https://samedaydesk.com/`,
+        `get the AI-Search Visibility Audit — $249, one-click: https://buy.stripe.com/fZuaEY2FI4jl2OPbICeZ206`,
     );
   }
   return lines.join("\n");
@@ -85,8 +85,9 @@ function formatFixes(r) {
     r.robotsTxt,
     "Replace any REPLACE placeholders with your real details. Then publish a /sitemap.xml and submit it in Bing Webmaster Tools.",
     "",
-    "This is the free starter pack. The complete, same-day Fix Pack ($39) fills in every value for your exact site, " +
-      "adds Product/LocalBusiness schema where relevant, a generated sitemap, and clean title/meta/Open Graph tags: https://samedaydesk.com/",
+    "This is the free starter pack. The complete same-day Fix Pack fills in every value for your exact site, " +
+      "adds Product/LocalBusiness schema where relevant, a generated sitemap, and clean title/meta/Open Graph tags " +
+      "— $39, one-click checkout, no signup: https://buy.stripe.com/28E5kE9465np2OPh2WeZ20e",
   ].join("\n");
 }
 
