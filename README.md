@@ -90,6 +90,14 @@ It exposes two tools:
 - `check_ai_readiness(url)` — returns the score, grade, and a specific fix for each gap.
 - `generate_ai_readiness_fixes(url)` — generates starter Organization + FAQPage JSON-LD (pre-filled from the site) and an AI-crawler-friendly robots.txt.
 
+### No install (hosted / remote)
+
+If your client supports remote MCP servers (e.g. ChatGPT connectors, Claude.ai custom connectors), point it at the hosted endpoint — nothing to install:
+
+```json
+{ "mcpServers": { "ai-readiness": { "url": "https://samedaydesk.com/mcp" } } }
+```
+
 ## Use in CI (GitHub Action)
 
 Fail-fast on AI-search regressions by checking a URL on every deploy:
