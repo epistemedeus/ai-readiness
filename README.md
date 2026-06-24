@@ -114,6 +114,12 @@ This CLI checks the technical basics. The questions it **can't** answer from you
 
 That's the **AI-Search Visibility Audit** from SameDayDesk: real citation testing across engines, a competitor benchmark, and a prioritized fix list as a PDF and web report, delivered same day. → **[samedaydesk.com](https://samedaydesk.com/)**
 
+## Need a custom MCP server?
+
+Like how this one is built — dependency-free, stdio **and** remote (Streamable HTTP), published to the [MCP registry](https://registry.modelcontextprotocol.io), one clean tool? We build MCP servers for your API or product the same way.
+
+**Custom MCP Server — $349, delivered fast.** You get a working server (stdio + optional hosted remote), wired to your API, with the registry/manifest setup done. → **[get one built](https://samedaydesk.com/)** ([or buy directly](https://buy.stripe.com/14A4gA6VY7vxahh6oieZ20d)).
+
 ## License
 
 MIT © Neomorphic LLC ([SameDayDesk](https://samedaydesk.com/))
