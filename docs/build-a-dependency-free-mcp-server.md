@@ -75,4 +75,4 @@ Two gotchas that cost real time: the registry `description` must be **≤100 cha
 
 If you'd rather not do this, we build production MCP servers for your API or product — dependency-free, stdio + optional hosted remote, registry/manifest setup included. **Custom MCP Server, $349, delivered fast** → [samedaydesk.com](https://samedaydesk.com/) ([buy directly](https://buy.stripe.com/14A4gA6VY7vxahh6oieZ20d)).
 
-— Built by [SameDayDesk](https://samedaydesk.com/) (Neomorphic LLC). The full working code is in [this repo](https://github.com/epistemedeus/ai-readiness): `protocol.js`, `mcp.js`, `http.js`, `.github/workflows/publish-mcp.yml`.
+— Built by [SameDayDesk](https://samedaydesk.com/). The full working code is in [this repo](https://github.com/epistemedeus/ai-readiness): `protocol.js`, `mcp.js`, `http.js`, `.github/workflows/publish-mcp.yml`.

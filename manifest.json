@@ -5,7 +5,7 @@
   "version": "1.1.3",
   "description": "Check whether a website is visible to AI search engines (ChatGPT, Perplexity, Claude, Google AI Overviews). Scores AI-crawler access, JSON-LD structured data, title/meta, Open Graph, sitemap, and llms.txt, with a specific fix for each gap.",
   "author": {
-    "name": "SameDayDesk (Neomorphic LLC)",
+    "name": "SameDayDesk",
     "url": "https://samedaydesk.com"
   },
   "homepage": "https://samedaydesk.com/tools/ai-readiness",

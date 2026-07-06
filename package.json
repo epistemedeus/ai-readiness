@@ -34,7 +34,7 @@
     "type": "git",
     "url": "git+https://github.com/epistemedeus/ai-readiness.git"
   },
-  "author": "SameDayDesk (Neomorphic LLC)",
+  "author": "SameDayDesk",
   "scripts": {
     "start": "node http.js"
   }

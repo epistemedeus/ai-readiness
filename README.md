@@ -148,4 +148,4 @@ Free, in-depth guides on getting your site read and cited by AI search:
 
 ## License
 
-MIT © Neomorphic LLC ([SameDayDesk](https://samedaydesk.com/))
+MIT © [SameDayDesk](https://samedaydesk.com/)
