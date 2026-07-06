@@ -12,14 +12,14 @@ No install, no signup, no dependencies. Node 18+.
 
 ---
 
-### 📦 Want the fixes done for you? AI Search Readiness Kit — $9
+### 📦 Want the fixes done for you? AI Search Readiness Kit: $9
 
 The checker tells you *what* to fix. This kit gives you *everything to fix it*, ready to paste:
 
 - Copy-paste **robots.txt** (welcomes every AI crawler), **Organization + WebSite + FAQPage JSON-LD**, **title/meta/Open Graph** templates, and an **XML sitemap**
 - The **7-fix priority checklist** in order of impact
 - The **full benchmark** behind the dataset below
-- Delivered **instantly** after checkout — no signup
+- Delivered **instantly** after checkout, no signup
 
 **→ [Get the AI Search Readiness Kit ($9)](https://buy.stripe.com/9B66oI1BEdTV6116oieZ20j)**  ·  Prefer a done-for-you audit of your site? See **[samedaydesk.com](https://samedaydesk.com)**.
 
@@ -28,7 +28,7 @@ The checker tells you *what* to fix. This kit gives you *everything to fix it*, 
 We ran this checker against the homepages of **136 well-known companies across 7 industries** and published the full results. Open data, free to use with attribution.
 
 - **Full CSV:** [`data/ai-search-readiness-2026.csv`](data/ai-search-readiness-2026.csv)
-- **Interactive, sortable leaderboard:** [samedaydesk.com — AI-Search Readiness Leaderboard](https://samedaydesk.com/reports/ai-search-readiness-leaderboard-2026.html)
+- **Interactive, sortable leaderboard:** [samedaydesk.com: AI-Search Readiness Leaderboard](https://samedaydesk.com/reports/ai-search-readiness-leaderboard-2026.html)
 
 **Average score by industry (lower = harder for AI search to read):**
 
@@ -42,7 +42,7 @@ We ran this checker against the homepages of **136 well-known companies across 7
 | Fintech | 74 | 16 |
 | Healthtech | 63 | 11 |
 
-**Notable findings:** Healthtech is the least AI-search-ready industry (avg 63). Klarna scored an F (38); GitHub, Chime, Ramp, Gusto, Ro, Hims and Zocdoc each scored a D. Even some AI companies struggle — Perplexity scored a C and LlamaIndex a D. Most gaps are the same and entirely fixable: JavaScript-only homepages, missing JSON-LD structured data, and no sitemap.
+**Notable findings:** Healthtech is the least AI-search-ready industry (avg 63). Klarna scored an F (38); GitHub, Chime, Ramp, Gusto, Ro, Hims and Zocdoc each scored a D. Even some AI companies struggle. Perplexity scored a C and LlamaIndex a D. Most gaps are the same and entirely fixable: JavaScript-only homepages, missing JSON-LD structured data, and no sitemap.
 
 Per-industry write-ups: [SaaS](https://samedaydesk.com/reports/ai-search-readiness-saas-2026.html) · [e-commerce](https://samedaydesk.com/reports/ai-search-readiness-ecommerce-2026.html) · [marketing agencies](https://samedaydesk.com/reports/ai-search-readiness-marketing-agencies-2026.html) · [AI startups](https://samedaydesk.com/reports/ai-search-readiness-ai-startups-2026.html) · [healthtech](https://samedaydesk.com/reports/ai-search-readiness-healthtech-2026.html).
 
@@ -100,12 +100,12 @@ Add the checker to any [Model Context Protocol](https://modelcontextprotocol.io)
 ```
 
 It exposes two tools:
-- `check_ai_readiness(url)` — returns the score, grade, and a specific fix for each gap.
-- `generate_ai_readiness_fixes(url)` — generates starter Organization + FAQPage JSON-LD (pre-filled from the site) and an AI-crawler-friendly robots.txt.
+- `check_ai_readiness(url)`: returns the score, grade, and a specific fix for each gap.
+- `generate_ai_readiness_fixes(url)`: generates starter Organization + FAQPage JSON-LD (pre-filled from the site) and an AI-crawler-friendly robots.txt.
 
 ### No install (hosted / remote)
 
-If your client supports remote MCP servers (e.g. ChatGPT connectors, Claude.ai custom connectors), point it at the hosted endpoint — nothing to install:
+If your client supports remote MCP servers (e.g. ChatGPT connectors, Claude.ai custom connectors), point it at the hosted endpoint, nothing to install:
 
 ```json
 { "mcpServers": { "ai-readiness": { "url": "https://samedaydesk.com/mcp" } } }
@@ -129,9 +129,9 @@ That's the **AI-Search Visibility Audit** from SameDayDesk: real citation testin
 
 ## Need a custom MCP server?
 
-Like how this one is built — dependency-free, stdio **and** remote (Streamable HTTP), published to the [MCP registry](https://registry.modelcontextprotocol.io), one clean tool? We build MCP servers for your API or product the same way. (Curious how? Read the guide: [How to build a dependency-free MCP server](docs/build-a-dependency-free-mcp-server.md).)
+Like how this one is built: dependency-free, stdio **and** remote (Streamable HTTP), published to the [MCP registry](https://registry.modelcontextprotocol.io), one clean tool? We build MCP servers for your API or product the same way. (Curious how? Read the guide: [How to build a dependency-free MCP server](docs/build-a-dependency-free-mcp-server.md).)
 
-**Custom MCP Server — $349, delivered fast.** You get a working server (stdio + optional hosted remote), wired to your API, with the registry/manifest setup done. → **[get one built](https://samedaydesk.com/)** ([or buy directly](https://buy.stripe.com/14A4gA6VY7vxahh6oieZ20d)).
+**Custom MCP Server: $349, delivered fast.** You get a working server (stdio + optional hosted remote), wired to your API, with the registry/manifest setup done. → **[get one built](https://samedaydesk.com/)** ([or buy directly](https://buy.stripe.com/14A4gA6VY7vxahh6oieZ20d)).
 
 ## Guides
 
