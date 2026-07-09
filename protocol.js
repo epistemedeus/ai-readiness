@@ -5,7 +5,21 @@
 import { run, generateFix } from "./lib.js";
 
 export const PROTOCOL_VERSION = "2024-11-05";
-export const SERVER_INFO = { name: "ai-readiness", version: "1.1.3" };
+export const SERVER_INFO = {
+  name: "ai-readiness",
+  version: "1.1.3",
+  description:
+    "Check whether a website is visible to AI search engines (ChatGPT, Perplexity, Claude, Google AI Overviews) " +
+    "and generate starter fixes. Dependency-free; stdio and streamable HTTP transports.",
+  websiteUrl: "https://samedaydesk.com/tools/ai-readiness",
+};
+
+// Server-level usage note returned from initialize. MCP clients and LLMs read
+// `instructions` to understand what a server is for before calling its tools.
+export const INSTRUCTIONS =
+  "Use check_ai_readiness(url) to score a website's visibility to AI search engines and get a specific fix " +
+  "for each gap, and generate_ai_readiness_fixes(url) to produce ready-to-paste Organization and FAQPage " +
+  "JSON-LD plus an AI-crawler-friendly robots.txt. Pass a domain or full URL; only public hosts are accepted.";
 
 export const TOOLS = [
   {
@@ -124,6 +138,7 @@ export async function handleMessage(msg) {
         protocolVersion: params?.protocolVersion || PROTOCOL_VERSION,
         capabilities: { tools: {} },
         serverInfo: SERVER_INFO,
+        instructions: INSTRUCTIONS,
       });
     case "notifications/initialized":
     case "notifications/cancelled":
