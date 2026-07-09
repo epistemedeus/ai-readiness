@@ -15,7 +15,7 @@ export const AI_CRAWLERS = [
 const UA = "ai-readiness/1.0 (+https://github.com/epistemedeus/ai-readiness)";
 const TIMEOUT = 10000, MAX_BYTES = 2_500_000;
 
-function isPrivateIp(ip) {
+export function isPrivateIp(ip) {
   if (net.isIPv4(ip)) {
     const [a, b] = ip.split(".").map(Number);
     return a === 10 || a === 127 || a === 0 || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168) || (a === 169 && b === 254) || (a === 100 && b >= 64 && b <= 127);
@@ -23,7 +23,7 @@ function isPrivateIp(ip) {
   if (net.isIPv6(ip)) { const v = ip.toLowerCase(); return v === "::1" || v.startsWith("fc") || v.startsWith("fd") || v.startsWith("fe80") || v.startsWith("::ffff:"); }
   return true;
 }
-function normalizeUrl(raw) {
+export function normalizeUrl(raw) {
   let s = String(raw || "").trim();
   if (!s) throw new Error("Usage: ai-readiness <url> [--json]");
   if (!/^https?:\/\//i.test(s)) s = "https://" + s;
@@ -44,7 +44,7 @@ async function fetchText(url, html = false) {
     return { ok: r.ok, status: r.status, finalUrl: r.url, body: buf.toString("utf8") };
   } finally { clearTimeout(t); }
 }
-function robotsBlocks(txt, uaName) {
+export function robotsBlocks(txt, uaName) {
   if (!txt) return false;
   const lines = txt.split(/\r?\n/).map((l) => l.replace(/#.*$/, "").trim());
   const groups = []; let cur = null;
@@ -63,7 +63,7 @@ function robotsBlocks(txt, uaName) {
   return dis && !alw;
 }
 const attr = (tag, name) => { const m = tag.match(new RegExp(name + '\\s*=\\s*["\']([^"\']*)["\']', "i")); return m ? m[1].trim() : null; };
-function analyzeHtml(html) {
+export function analyzeHtml(html) {
   const o = { title: null, description: null, og: 0, jsonld: [] };
   if (!html) return o;
   const tm = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i); if (tm) o.title = tm[1].replace(/\s+/g, " ").trim();
@@ -78,6 +78,26 @@ function analyzeHtml(html) {
     } catch { o.jsonld.push("(unparseable)"); }
   }
   return o;
+}
+
+// Weighted scoring for the six checks, in the order run() produces them. Kept
+// as exported pure functions so the scoring and grade boundaries are
+// unit-testable and reusable without a network round-trip.
+export const CHECK_WEIGHTS = [35, 22, 15, 8, 15, 5];
+const STATUS_POINTS = { pass: 1, warn: 0.5, fail: 0 };
+
+export function scoreChecks(checks, weights = CHECK_WEIGHTS) {
+  let earned = 0, max = 0;
+  checks.forEach((c, i) => {
+    const w = weights[i] ?? 0;
+    earned += w * (STATUS_POINTS[c.status] ?? 0);
+    max += w;
+  });
+  return max ? Math.round((earned / max) * 100) : 0;
+}
+
+export function gradeFor(score) {
+  return score >= 90 ? "A" : score >= 75 ? "B" : score >= 60 ? "C" : score >= 40 ? "D" : "F";
 }
 
 export async function run(rawUrl, asJson) {
@@ -112,10 +132,8 @@ export async function run(rawUrl, asJson) {
   add("XML sitemap", hasSitemap ? "pass" : "fail", hasSitemap ? "found" : "none at root or in robots.txt", hasSitemap ? null : "Publish /sitemap.xml and submit it in Bing Webmaster Tools.");
   add("llms.txt", hasLlms ? "pass" : "warn", hasLlms ? "found" : "none (minor: no proven citation effect)", hasLlms ? null : "Optional hygiene; do not expect a ranking boost.");
 
-  const W = [35, 22, 15, 8, 15, 5], P = { pass: 1, warn: 0.5, fail: 0 };
-  let s = 0, m = 0; checks.forEach((c, i) => { s += W[i] * P[c.status]; m += W[i]; });
-  const score = Math.round((s / m) * 100);
-  const grade = score >= 90 ? "A" : score >= 75 ? "B" : score >= 60 ? "C" : score >= 40 ? "D" : "F";
+  const score = scoreChecks(checks);
+  const grade = gradeFor(score);
   return { url: page.finalUrl || u.toString(), score, grade, checks };
 }
 
