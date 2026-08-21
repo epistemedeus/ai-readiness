@@ -10,7 +10,7 @@ export const SERVER_INFO = {
   version: "1.1.3",
   description:
     "Check whether a website is visible to AI search engines (ChatGPT, Perplexity, Claude, Google AI Overviews) " +
-    "and generate starter fixes. Dependency-free; stdio and streamable HTTP transports.",
+    "and generate starter fixes. Dependency-free; stdio plus a custom JSON-RPC-over-HTTP POST adapter.",
   websiteUrl: "https://samedaydesk.com/tools/ai-readiness",
 };
 
@@ -134,8 +134,10 @@ export async function handleMessage(msg) {
   const { id, method, params } = msg || {};
   switch (method) {
     case "initialize":
+      // Return the implemented version only. Echoing params.protocolVersion
+      // would advertise later spec revisions this server does not speak.
       return ok(id, {
-        protocolVersion: params?.protocolVersion || PROTOCOL_VERSION,
+        protocolVersion: PROTOCOL_VERSION,
         capabilities: { tools: {} },
         serverInfo: SERVER_INFO,
         instructions: INSTRUCTIONS,

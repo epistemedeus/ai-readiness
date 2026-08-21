@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { handleMessage, SERVER_INFO, INSTRUCTIONS, TOOLS } from "../protocol.js";
+import { readFileSync } from "node:fs";
+import { handleMessage, PROTOCOL_VERSION, SERVER_INFO, INSTRUCTIONS, TOOLS } from "../protocol.js";
 
 test("initialize returns serverInfo with a description and instructions", async () => {
   const res = await handleMessage({ jsonrpc: "2.0", id: 1, method: "initialize", params: {} });
@@ -10,11 +11,112 @@ test("initialize returns serverInfo with a description and instructions", async 
   assert.equal(typeof res.result.instructions, "string");
   assert.ok(res.result.instructions.length > 0);
   assert.deepEqual(res.result.capabilities, { tools: {} });
+  assert.equal(res.result.protocolVersion, PROTOCOL_VERSION);
 });
 
-test("initialize echoes the client's requested protocol version", async () => {
-  const res = await handleMessage({ jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: "2025-03-26" } });
-  assert.equal(res.result.protocolVersion, "2025-03-26");
+test("initialize with a missing protocolVersion offer returns the declared supported version", async () => {
+  const res = await handleMessage({ jsonrpc: "2.0", id: 1, method: "initialize", params: {} });
+  assert.equal(PROTOCOL_VERSION, "2024-11-05");
+  assert.equal(res.result.protocolVersion, PROTOCOL_VERSION);
+});
+
+test("initialize with the exact supported protocolVersion returns that same version", async () => {
+  const res = await handleMessage({
+    jsonrpc: "2.0",
+    id: 1,
+    method: "initialize",
+    params: { protocolVersion: PROTOCOL_VERSION },
+  });
+  assert.equal(res.result.protocolVersion, PROTOCOL_VERSION);
+});
+
+test("initialize with a future protocolVersion offer returns the declared supported version, not the echo", async () => {
+  for (const protocolVersion of ["2025-03-26", "2025-11-25", "2026-07-28"]) {
+    const res = await handleMessage({
+      jsonrpc: "2.0",
+      id: 1,
+      method: "initialize",
+      params: { protocolVersion },
+    });
+    assert.equal(res.result.protocolVersion, PROTOCOL_VERSION, `offer ${protocolVersion}`);
+    assert.notEqual(res.result.protocolVersion, protocolVersion);
+  }
+});
+
+test("initialize with a bogus protocolVersion offer returns the declared supported version, not the echo", async () => {
+  for (const protocolVersion of ["", "1.0.0", "not-a-version", "latest"]) {
+    const res = await handleMessage({
+      jsonrpc: "2.0",
+      id: 1,
+      method: "initialize",
+      params: { protocolVersion },
+    });
+    assert.equal(res.result.protocolVersion, PROTOCOL_VERSION, `offer ${JSON.stringify(protocolVersion)}`);
+    assert.notEqual(res.result.protocolVersion, protocolVersion);
+  }
+});
+
+test("docs do not claim this two-tool server is hosted at the live apex /mcp", () => {
+  for (const rel of ["README.md", "docs/build-a-dependency-free-mcp-server.md"]) {
+    const text = readFileSync(new URL(`../${rel}`, import.meta.url), "utf8");
+    assert.equal(text.includes("https://samedaydesk.com/mcp"), false, rel);
+    assert.equal(text.includes("params?.protocolVersion"), false, rel);
+  }
+});
+
+test("docs label http.js as a custom JSON-RPC-over-HTTP adapter, not Streamable HTTP or one tool", () => {
+  const required = [
+    "minimal stateless custom JSON-RPC-over-HTTP POST adapter",
+    "not MCP Streamable HTTP",
+    "ordinary Streamable HTTP clients cannot use it as-is",
+  ];
+  const forbidden = [
+    "one clean tool",
+    "over Streamable HTTP",
+    "hosted **Streamable HTTP**",
+    "stdio **and** remote (Streamable HTTP)",
+    "The Streamable HTTP transport can be a single",
+    "speaks both transports",
+  ];
+  for (const rel of ["README.md", "docs/build-a-dependency-free-mcp-server.md"]) {
+    const text = readFileSync(new URL(`../${rel}`, import.meta.url), "utf8");
+    for (const phrase of required) {
+      assert.ok(text.includes(phrase), `${rel} must contain ${JSON.stringify(phrase)}`);
+    }
+    for (const phrase of forbidden) {
+      assert.equal(text.includes(phrase), false, `${rel} must not contain ${JSON.stringify(phrase)}`);
+    }
+  }
+  const readme = readFileSync(new URL("../README.md", import.meta.url), "utf8");
+  assert.ok(readme.includes("two focused tools"));
+});
+
+test("protocol.js and http.js do not claim Streamable HTTP or a remote mcpServers URL", () => {
+  const protocolSrc = readFileSync(new URL("../protocol.js", import.meta.url), "utf8");
+  const httpSrc = readFileSync(new URL("../http.js", import.meta.url), "utf8");
+  const truthfulDescription = "Dependency-free; stdio plus a custom JSON-RPC-over-HTTP POST adapter.";
+  assert.ok(protocolSrc.includes(truthfulDescription), "protocol.js must contain the truthful SERVER_INFO.description");
+  assert.ok(SERVER_INFO.description.includes(truthfulDescription));
+  assert.equal(protocolSrc.includes("stdio and streamable HTTP transports"), false);
+  assert.equal(/streamable HTTP/i.test(protocolSrc), false);
+
+  const requiredHttp = [
+    "minimal custom JSON-RPC-over-HTTP POST adapter",
+    "not MCP Streamable HTTP",
+    "not directly compatible with ordinary Streamable HTTP clients",
+  ];
+  for (const phrase of requiredHttp) {
+    assert.ok(httpSrc.includes(phrase), `http.js must contain ${JSON.stringify(phrase)}`);
+  }
+  const forbiddenHttp = [
+    "Streamable HTTP transport",
+    "ai-readiness MCP server (Streamable HTTP)",
+    '{ "mcpServers": { "ai-readiness": { "url": "<this-url>/mcp" } } }',
+    "Add to an MCP client that supports remote servers",
+  ];
+  for (const phrase of forbiddenHttp) {
+    assert.equal(httpSrc.includes(phrase), false, `http.js must not contain ${JSON.stringify(phrase)}`);
+  }
 });
 
 test("SERVER_INFO and INSTRUCTIONS are exported and non-empty", () => {

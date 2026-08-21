@@ -1,18 +1,20 @@
-# How to build a dependency-free MCP server (stdio + remote) and publish it to the registry
+# How to build a dependency-free MCP server (stdio + a custom HTTP adapter) and publish it to the registry
 
-This repo's MCP server has no dependencies, speaks both transports (local **stdio** and hosted **Streamable HTTP**), and is listed in the [official MCP registry](https://registry.modelcontextprotocol.io). Here's exactly how it's built, so you can copy the pattern. Everything below is real, working code from this repository.
+This repo's MCP server has no dependencies. Local MCP clients use **stdio**. `http.js` is a minimal stateless custom JSON-RPC-over-HTTP POST adapter; it is not MCP Streamable HTTP, not a production remote MCP transport, and ordinary Streamable HTTP clients cannot use it as-is. The server is listed in the [official MCP registry](https://registry.modelcontextprotocol.io). Here's exactly how it's built, so you can copy the pattern. Everything below is real, working code from this repository.
 
 ## 1. Keep the protocol layer transport-agnostic
 
 MCP is just JSON-RPC 2.0. Put the message handling in one place and let each transport call it. `handleMessage(msg)` returns a response object (or `null` for notifications):
 
 ```js
+const PROTOCOL_VERSION = "2024-11-05"; // only a version this server implements
+
 export async function handleMessage(msg) {
   const { id, method, params } = msg || {};
   switch (method) {
     case "initialize":
       return { jsonrpc: "2.0", id, result: {
-        protocolVersion: params?.protocolVersion || "2024-11-05",
+        protocolVersion: PROTOCOL_VERSION,
         capabilities: { tools: {} },
         serverInfo: { name: "your-server", version: "1.0.0" },
       }};
@@ -26,6 +28,8 @@ export async function handleMessage(msg) {
   }
 }
 ```
+
+`initialize` is version negotiation, not an echo. The client *offers* a `protocolVersion`. The server must respond with a version it actually implements: the requested one if it supports that revision, otherwise another version it supports. Copying `params.protocolVersion` into the result claims newer (or bogus) semantics this implementation does not have. Clients that trust that echo will then send messages the server cannot honor. Return only the implemented/negotiated supported version.
 
 A tool result is `{ content: [{ type: "text", text }], structuredContent }`. Set `isError: true` for tool-level failures (not protocol errors).
 
@@ -53,15 +57,15 @@ process.stdin.on("data", (chunk) => {
 process.stdin.on("end", () => { ended = true; maybeExit(); });
 ```
 
-## 3. Remote transport: one HTTP endpoint, stateless
+## 3. Custom JSON-RPC-over-HTTP POST adapter (not Streamable HTTP)
 
-The Streamable HTTP transport can be a single `POST` that returns the JSON-RPC response as `application/json` (you only need SSE if you stream). Stateless servers can skip session IDs. Enable CORS so browser-based clients (ChatGPT connectors, Claude.ai custom connectors) can reach it:
+`http.js` is a minimal stateless custom JSON-RPC-over-HTTP POST adapter. A single `POST` returns the JSON-RPC response as `application/json`. There is no SSE stream and no session lifecycle. It is not MCP Streamable HTTP, not a production remote MCP transport, and ordinary Streamable HTTP clients cannot use it as-is. CORS is enabled for simple browser POSTs:
 
 ```js
 // POST /mcp  ->  res.json(await handleMessage(req.body))   // notifications -> 202
 ```
 
-Now the same server works locally (`stdio`) and as a hosted URL.
+The same `handleMessage` is reused by local stdio (`mcp.js`) and this custom adapter (`http.js`). Do not treat `http.js` as a drop-in remote MCP transport.
 
 ## 4. Ship it: MCPB bundle + registry, fully from CI
 

@@ -103,13 +103,7 @@ It exposes two tools:
 - `check_ai_readiness(url)`: returns the score, grade, and a specific fix for each gap.
 - `generate_ai_readiness_fixes(url)`: generates starter Organization + FAQPage JSON-LD (pre-filled from the site) and an AI-crawler-friendly robots.txt.
 
-### No install (hosted / remote)
-
-If your client supports remote MCP servers (e.g. ChatGPT connectors, Claude.ai custom connectors), point it at the hosted endpoint, nothing to install:
-
-```json
-{ "mcpServers": { "ai-readiness": { "url": "https://samedaydesk.com/mcp" } } }
-```
+This standalone package is the two-tool local MCP server. Use the `npx` stdio config above (`npx -y github:epistemedeus/ai-readiness mcp`, or `node mcp.js`). `http.js` is a minimal stateless custom JSON-RPC-over-HTTP POST adapter (`POST /mcp`); it is not MCP Streamable HTTP, not a production remote MCP transport, and ordinary Streamable HTTP clients cannot use it as-is. There is no hosted remote MCP URL for this package.
 
 ## Use in CI (GitHub Action)
 
@@ -129,7 +123,7 @@ That's the **AI-Search Visibility Audit** from SameDayDesk: real citation testin
 
 ## Need a custom MCP server?
 
-Like how this one is built: dependency-free, stdio **and** remote (Streamable HTTP), published to the [MCP registry](https://registry.modelcontextprotocol.io), one clean tool? We build MCP servers for your API or product the same way. (Curious how? Read the guide: [How to build a dependency-free MCP server](docs/build-a-dependency-free-mcp-server.md).)
+Like how this one is built: dependency-free, stdio plus a custom JSON-RPC-over-HTTP POST adapter, published to the [MCP registry](https://registry.modelcontextprotocol.io), two focused tools? We build MCP servers for your API or product the same way. (Curious how? Read the guide: [How to build a dependency-free MCP server](docs/build-a-dependency-free-mcp-server.md).)
 
 **Custom MCP Server: $349, delivered fast.** You get a working server (stdio + optional hosted remote), wired to your API, with the registry/manifest setup done. → **[get one built](https://samedaydesk.com/)** ([or buy directly](https://buy.stripe.com/14A4gA6VY7vxahh6oieZ20d)).
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// ai-readiness MCP server — Streamable HTTP transport. Lets remote/web MCP
-// clients (ChatGPT connectors, Claude.ai custom connectors, etc.) that can't run
-// a local stdio process use the checker over HTTPS. Stateless + CORS-enabled.
-// Protocol logic is shared with the stdio server via protocol.js.
+// ai-readiness MCP server — a minimal custom JSON-RPC-over-HTTP POST adapter.
+// Explicitly not MCP Streamable HTTP and not directly compatible with ordinary
+// Streamable HTTP clients. Stateless + CORS-enabled. Protocol logic is shared
+// with the stdio server via protocol.js.
 //
 // POST /mcp  with a JSON-RPC message  -> JSON-RPC response (application/json)
 // GET  /     -> small landing/health page
@@ -37,10 +37,8 @@ function readBody(req) {
   });
 }
 
-const LANDING = `ai-readiness MCP server (Streamable HTTP)
-
-Add to an MCP client that supports remote servers, e.g.:
-  { "mcpServers": { "ai-readiness": { "url": "<this-url>/mcp" } } }
+const LANDING = `ai-readiness MCP server — a minimal custom JSON-RPC-over-HTTP POST adapter
+Not MCP Streamable HTTP; not directly compatible with ordinary Streamable HTTP clients.
 
 Tools: check_ai_readiness(url), generate_ai_readiness_fixes(url)
 Free hosted UI + same-day Fix Pack: https://samedaydesk.com/tools/ai-readiness
